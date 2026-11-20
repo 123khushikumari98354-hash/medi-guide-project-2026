@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Theme tokens: K.R. Mangalam University blue / red + MediGuide green ---------- */
+:root {
+  --bg:#f5f8fb; --surface:#ffffff; --surface2:#e8eff5; --ink:#1a2b49; --muted:#475c78; --line:#c9d8e4;
+  --brand:#0060aa; --brand-ink:#ffffff; --brand-soft:#dcebf7; --red:#e31e24;
+  --danger:#c9161c; --danger-ink:#ffffff; --danger-soft:#fde6e7;
+  --warn:#7a4a00; --warn-soft:#fdefd0; --ok:#17653a; --ok-soft:#d9f2e2;
+  --focus:#1d4ed8; --corr:#e6eef5; --room:#ffffff; --roomline:#9fb4c8; --wm1:#0b3a8f; --wm2:#13966a;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#0c1626; --surface:#13233a; --surface2:#1b2f4a; --ink:#e8eef7; --muted:#a9b9cf; --line:#2b4263;
+    --brand:#5db0f0; --brand-ink:#04213a; --brand-soft:#17304f; --red:#ff5a60;
+    --danger:#d6403f; --danger-soft:#3b1c20; --warn:#f0b44c; --warn-soft:#3a2d12; --ok:#6fd49a; --ok-soft:#15321f;
+    --focus:#7aa7ff; --corr:#182a43; --room:#13233a; --roomline:#3f5a80; --wm1:#8cc3f7; --wm2:#3ecf97;
+  }
+}
+:root:root.hc {
+  --bg:#ffffff; --surface:#ffffff; --surface2:#f0f0f0; --ink:#000000; --muted:#000000; --line:#000000;
+  --brand:#003a6e; --brand-ink:#ffffff; --brand-soft:#e3eef8; --red:#a00000;
+  --danger:#8f0e08; --danger-soft:#ffe8e6; --warn:#4d2d00; --warn-soft:#fff3d6; --ok:#0b4a25; --ok-soft:#e1f6e9;
+  --focus:#0030c0; --corr:#ececec; --room:#ffffff; --roomline:#000000; --wm1:#000; --wm2:#000;
+}
+html { font-size: 100%; scroll-padding-top: env(safe-area-inset-top, 0px); }
+html.lg { font-size: 125%; }
+body { @apply bg-bg text-ink font-sans leading-relaxed; font-size: 1.0625rem; margin: 0; }
+h1, h2, h3 { @apply leading-tight; margin: 0; }
+h1 { @apply font-bold; font-size: clamp(1.9rem, 5.5vw, 3rem); letter-spacing: -0.01em; }
+h2 { @apply font-bold text-2xl; }
+h3 { @apply font-bold text-lg; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 6px; }
+
+@layer components {
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-xl border-2 border-brand bg-brand px-4 py-2.5 font-bold text-brand-ink no-underline min-h-[48px] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed; }
+  .btn-ghost { @apply bg-transparent text-brand; }
+  .btn-danger { @apply bg-danger border-danger text-danger-ink; }
+  .btn-sm { @apply min-h-[40px] px-3 py-1 text-[0.95rem]; }
+  .chip-btn { @apply min-h-[44px] cursor-pointer rounded-full border-2 border-line bg-surface px-4 py-1.5 font-bold aria-pressed:bg-brand aria-pressed:text-brand-ink aria-pressed:border-brand aria-expanded:bg-brand aria-expanded:text-brand-ink aria-expanded:border-brand; }
+  .pill { @apply inline-block rounded-full bg-brand-soft px-2.5 py-0.5 text-sm font-bold; }
+  .pill-ok { @apply bg-ok-soft text-ok; }
+  .pill-warn { @apply bg-warn-soft text-warn; }
+  .pill-bad { @apply bg-danger-soft text-danger; }
+  .field { @apply w-full min-h-[48px] rounded-xl border-2 border-line bg-surface px-3.5 py-2.5; }
+  .label { @apply mb-1 block font-bold; }
+  .opt { @apply min-h-[56px] cursor-pointer rounded-xl border-2 border-line bg-surface p-3 text-left disabled:cursor-not-allowed disabled:line-through disabled:opacity-45 aria-pressed:border-brand aria-pressed:bg-brand-soft; }
+  .opt small { @apply block text-muted; }
+  .banner { @apply my-4 rounded-2xl border-2 p-4; }
+  .seg { @apply inline-flex overflow-hidden rounded-xl border-2 border-brand; }
+  .seg button { @apply min-h-[46px] cursor-pointer bg-transparent px-4 font-bold text-brand aria-pressed:bg-brand aria-pressed:text-brand-ink; }
+  .section { @apply mt-8; }
+  .note { @apply mt-4 text-[0.92rem] text-muted; }
+  .list-row { @apply grid grid-cols-[1fr_auto] items-center gap-x-4 gap-y-1 border-b-2 border-line py-4; }
+  th { @apply p-2 text-left text-sm text-muted border-b-2 border-line; }
+  td { @apply p-2 align-middle border-b-2 border-line; }
+}
+
+/* ---------- Hospital map ---------- */
+.rm { fill: var(--room); stroke: var(--roomline); stroke-width: 1.5; cursor: pointer; }
+.rm.dept { fill: var(--brand-soft); }
+.rm.target { fill: var(--brand); stroke: var(--brand); }
+.rm.emg { fill: var(--danger-soft); stroke: var(--danger); }
+.rm.emg.target { fill: var(--danger); }
+.rmt { font-size: 11.5px; fill: var(--ink); text-anchor: middle; pointer-events: none; font-weight: 700; }
+.rmc { font-size: 10px; fill: var(--muted); text-anchor: middle; pointer-events: none; }
+.rmt.on, .rmc.on { fill: var(--brand-ink); }
+.corr { fill: var(--corr); }
+.lift { fill: var(--surface2); stroke: var(--roomline); stroke-width: 1.5; }
+.route { fill: none; stroke: #e8590c; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 10 9; animation: march 1s linear infinite; }
+:root:root.hc .route { stroke: #000; }
+@keyframes march { to { stroke-dashoffset: -19; } }
+.you { fill: #e8590c; stroke: #fff; stroke-width: 3; }
+.youtxt { font-size: 11px; font-weight: 700; fill: var(--ink); text-anchor: middle; }
+.door { fill: #e8590c; }
+html.rmotion .route, html.rmotion * { animation: none !important; transition: none !important; }
+@media (prefers-reduced-motion: reduce) { .route { animation: none; } }
+
+ol.steps { counter-reset: s; padding: 0; margin: .5rem 0 0; }
+ol.steps li { list-style: none; position: relative; padding: .35rem 0 .35rem 2.4rem; }
+ol.steps li::before { counter-increment: s; content: counter(s); position: absolute; left: 0; top: .3rem; width: 1.7rem; height: 1.7rem; border-radius: 9999px; background: var(--brand); color: var(--brand-ink); display: grid; place-items: center; font-weight: 700; font-size: .9rem; }
+.wm span:first-child { color: var(--wm1); } .wm span:last-child { color: var(--wm2); }
+.flow li { display: flex; align-items: center; }
+.flow li + li::before { content: '›'; color: var(--red); font-size: 1.8rem; font-weight: 700; margin: 0 .55rem; line-height: 1; }
+.phases { counter-reset: p; }
+.phases li { counter-increment: p; }
+.phases li::before { content: 'Phase ' counter(p); display: block; font-size: .85rem; color: var(--red); font-weight: 700; }
+.stars button.on { color: #e8a90c; }
+details.aid summary { cursor: pointer; font-weight: 700; font-size: 1.1rem; min-height: 44px; display: flex; align-items: center; }
